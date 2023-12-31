@@ -23,3 +23,4 @@ samples, guidance on mobile development, and a full API reference.
 # flutter_mask_stock_app
 # flutter_mask_stock_app
 # flutter_mask_stock_app
+# flutter_mask_stock_app
