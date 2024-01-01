@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mask_stock_app/model/mask_item.dart';
-import 'package:flutter_mask_stock_app/repository/mask_stock_repository.dart';
 import 'package:flutter_mask_stock_app/ui/mask_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +26,6 @@ class _MaskScreenState extends State<MaskScreen> {
     });
   }
 
-  MaskItem maskItem = MaskItem();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +71,6 @@ class _MaskScreenState extends State<MaskScreen> {
 
   // 마스크 갯수 로 나누기
   Widget _buildRemainState(MaskItem maskItem) {
-    final viewModel = context.watch<MaskScreenViewModel>();
 
     var remainState = '판매중지';
     var descrpition = '판매중지';
@@ -112,9 +109,10 @@ class _MaskScreenState extends State<MaskScreen> {
       children: [
         Text(
           remainState,
-          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: color, fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text(descrpition, style: TextStyle(color: color)),
+        Text(descrpition, style: TextStyle(color: color, fontSize: 16)),
       ],
     );
   }
