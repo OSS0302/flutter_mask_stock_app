@@ -17,6 +17,5 @@ class MaskScreenViewModel extends ChangeNotifier {
     notifyListeners(); //뷰모델에 데이터 갱신
 
   }
-  // 로딩
 
 }

@@ -32,19 +32,13 @@ class _MaskScreenState extends State<MaskScreen> {
     final viewModel = context.watch<MaskScreenViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('마스크 재고있는 약국 : ${viewModel.maskItem.where((e) {
-          return e.remain_stat == 'plenty' ||
-              e.remain_stat == 'some' ||
-              e.remain_stat == 'few' ||
-              e.remain_stat == 'empty';
-        }).length}곳'),
+        title: Text('마스크 재고있는 약국 : ${viewModel.maskItem.length}곳'),
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {
-                viewModel.getReady();
-                print('리프레쉬 완료');
-              });
+              viewModel.getReady();
+              print('리프레쉬 완료');
+
             },
             icon: Icon(Icons.refresh),
           ),
@@ -53,12 +47,7 @@ class _MaskScreenState extends State<MaskScreen> {
       body: viewModel.isLoading
           ? londingWidget()
           : ListView(
-              children: viewModel.maskItem.where((e) {
-                return e.remain_stat == 'plenty' ||
-                    e.remain_stat == 'some' ||
-                    e.remain_stat == 'few' ||
-                    e.remain_stat == 'empty';
-              }).map((e) {
+              children: viewModel.maskItem.map((e) {
                 return ListTile(
                   title: Text(e.name ?? ''),
                   subtitle: Text(e.addr ?? ''),
