@@ -31,5 +31,8 @@ class MaskItem {
 
   Map<String, dynamic> toJson() => _$MaskItemToJson(this);
 
-
+  @override
+  String toString() {
+    return 'MaskItem{addr: $addr, code: $code, created_at: $created_at, lat: $lat, lng: $lng, name: $name, remain_stat: $remain_stat, stock_at: $stock_at, type: $type}';
+  }
 }

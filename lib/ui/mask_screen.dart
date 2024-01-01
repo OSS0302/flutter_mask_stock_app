@@ -34,12 +34,19 @@ class _MaskScreenState extends State<MaskScreen> {
     final viewModel = context.watch<MaskScreenViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('마스크 재고있는 약국 ${viewModel.maskItem.length}'),
+        title: Text('마스크 재고있는 약국 : ${viewModel.maskItem.where((e) {
+          return e.remain_stat == 'plenty' ||
+              e.remain_stat == 'some' ||
+              e.remain_stat == 'few' ||
+              e.remain_stat == 'empty';
+        }).length}곳'),
         actions: [
           IconButton(
             onPressed: () {
-              viewModel.getReady();
-              print('리프레쉬 완료');
+              setState(() {
+                viewModel.getReady();
+                print('리프레쉬 완료');
+              });
             },
             icon: Icon(Icons.refresh),
           ),
@@ -47,9 +54,13 @@ class _MaskScreenState extends State<MaskScreen> {
       ),
       body: viewModel.isLoading
           ? londingWidget()
-
           : ListView(
-              children: viewModel.maskItem.map((e) {
+              children: viewModel.maskItem.where((e) {
+                return e.remain_stat == 'plenty' ||
+                    e.remain_stat == 'some' ||
+                    e.remain_stat == 'few' ||
+                    e.remain_stat == 'empty';
+              }).map((e) {
                 return ListTile(
                   title: Text(e.name ?? ''),
                   subtitle: Text(e.addr ?? ''),
@@ -61,37 +72,37 @@ class _MaskScreenState extends State<MaskScreen> {
   }
 
   // 마스크 갯수 로 나누기
-  Widget _buildRemainState (MaskItem maskItem) {
+  Widget _buildRemainState(MaskItem maskItem) {
     final viewModel = context.watch<MaskScreenViewModel>();
 
     var remainState = '판매중지';
     var descrpition = '판매중지';
     var color = Colors.black;
-    if(maskItem.remain_stat == 'plenty'){
+    if (maskItem.remain_stat == 'plenty') {
       var remainState = '충분';
       var descrpition = '100개';
       var color = Colors.green;
     }
-    switch(maskItem.remain_stat) {
-      case 'plenty' :
-         remainState = '충분';
-         descrpition = '100개이상 ';
-         color = Colors.green;
-         break;
-       case 'some' :
-         remainState = '보통';
-         descrpition = '30개 ~ 100개 ';
-         color = Colors.yellow;
-         break;
-      case 'few' :
-        remainState = '부족';
-        descrpition = '2 ~30개 ';
+    switch (maskItem.remain_stat) {
+      case 'plenty':
+        remainState = '충분';
+        descrpition = '100개이상 ';
         color = Colors.green;
         break;
-      case 'empty' :
+      case 'some':
+        remainState = '보통';
+        descrpition = '30개 ~ 100개 ';
+        color = Colors.yellow;
+        break;
+      case 'few':
+        remainState = '부족';
+        descrpition = '2 ~30개 ';
+        color = Colors.orange;
+        break;
+      case 'empty':
         remainState = '소진임박';
         descrpition = '1개 이하 ';
-        color = Colors.grey;
+        color = Colors.red;
         break;
 
       default:
@@ -99,12 +110,14 @@ class _MaskScreenState extends State<MaskScreen> {
 
     return Column(
       children: [
-        Text(remainState,style: TextStyle(color: color,fontWeight: FontWeight.bold),),
-        Text(descrpition,style: TextStyle(color: color)),
+        Text(
+          remainState,
+          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+        ),
+        Text(descrpition, style: TextStyle(color: color)),
       ],
     );
   }
-
 
 // 로딩 위젯
   Widget londingWidget() {

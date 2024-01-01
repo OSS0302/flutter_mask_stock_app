@@ -11,6 +11,7 @@ class MaskScreenViewModel extends ChangeNotifier {
     final mask = await repository.getMask();
     maskItem.addAll(mask);
     notifyListeners(); //뷰모델에 데이터 갱신
+
   }
 
   final bool isLoading = false;
