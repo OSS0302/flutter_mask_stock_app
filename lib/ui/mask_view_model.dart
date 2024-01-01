@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mask_stock_app/model/mask_item.dart';
+import 'package:flutter_mask_stock_app/repository/mask_stock_location_repository.dart';
 import 'package:flutter_mask_stock_app/repository/mask_stock_repository.dart';
 
 class MaskScreenViewModel extends ChangeNotifier {
   List<MaskItem> maskItem = [];
    bool isLoading = true;
   final repository = MaskItemRepositoryImpl();
+  final _maskStockLocationRepository = MaskStockLocationRepository();
 
   Future<void> getReady () async {
       isLoading = true;

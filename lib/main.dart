@@ -4,8 +4,8 @@ import 'package:flutter_mask_stock_app/ui/mask_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
-
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MaskScreenViewModel()),
