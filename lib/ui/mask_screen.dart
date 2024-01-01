@@ -53,13 +53,60 @@ class _MaskScreenState extends State<MaskScreen> {
                 return ListTile(
                   title: Text(e.name ?? ''),
                   subtitle: Text(e.addr ?? ''),
-                  trailing: Text(e.remain_stat ?? '매진 '),
+                  trailing: _buildRemainState(e),
                 );
               }).toList(),
             ),
     );
   }
 
+  // 마스크 갯수 로 나누기
+  Widget _buildRemainState (MaskItem maskItem) {
+    final viewModel = context.watch<MaskScreenViewModel>();
+
+    var remainState = '판매중지';
+    var descrpition = '판매중지';
+    var color = Colors.black;
+    if(maskItem.remain_stat == 'plenty'){
+      var remainState = '충분';
+      var descrpition = '100개';
+      var color = Colors.green;
+    }
+    switch(maskItem.remain_stat) {
+      case 'plenty' :
+         remainState = '충분';
+         descrpition = '100개이상 ';
+         color = Colors.green;
+         break;
+       case 'some' :
+         remainState = '보통';
+         descrpition = '30개 ~ 100개 ';
+         color = Colors.yellow;
+         break;
+      case 'few' :
+        remainState = '부족';
+        descrpition = '2 ~30개 ';
+        color = Colors.green;
+        break;
+      case 'empty' :
+        remainState = '소진임박';
+        descrpition = '1개 이하 ';
+        color = Colors.grey;
+        break;
+
+      default:
+    }
+
+    return Column(
+      children: [
+        Text(remainState,style: TextStyle(color: color,fontWeight: FontWeight.bold),),
+        Text(descrpition,style: TextStyle(color: color)),
+      ],
+    );
+  }
+
+
+// 로딩 위젯
   Widget londingWidget() {
     return const Center(
       child: Column(
