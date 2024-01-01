@@ -46,11 +46,7 @@ class _MaskScreenState extends State<MaskScreen> {
           ? londingWidget()
           : ListView(
               children: viewModel.maskItem.map((e) {
-                return ListTile(
-                  title: Text(e.name ?? ''),
-                  subtitle: Text(e.addr ?? ''),
-                  trailing: RemainStatewidget(e),
-                );
+                return RemainStatewidget(e);
               }).toList(),
             ),
     );
